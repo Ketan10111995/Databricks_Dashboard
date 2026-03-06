@@ -1,0 +1,1927 @@
+{
+  "datasets": [
+    {
+      "name": "94428759",
+      "displayName": "drugstbl_medal_bronze3",
+      "queryLines": [
+        "SELECT * FROM catalog1_we47.default.drugstbl_medal_bronze3"
+      ]
+    },
+    {
+      "name": "998e470d",
+      "displayName": "drug_data_visual1",
+      "queryLines": [
+        "select * ,:parameter sourcesystem from drug_info where usefulcount > 0"
+      ],
+      "parameters": [
+        {
+          "displayName": "parameter",
+          "keyword": "parameter",
+          "dataType": "STRING",
+          "defaultSelection": {
+            "values": {
+              "dataType": "STRING",
+              "values": [
+                {
+                  "value": "Abott Pharma"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "columns": [
+        {
+          "displayName": "ratepc",
+          "description": "rating percentage ",
+          "expression": "rating/100"
+        }
+      ],
+      "catalog": "catalog1_we47",
+      "schema": "default"
+    },
+    {
+      "name": "d9e4cf17",
+      "displayName": "patients_data",
+      "queryLines": [
+        "SELECT *,decimal(TotalCharges) as TotalCharges_decimal FROM patients where trim(TotalCharges)<>''"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "9ad52046",
+      "displayName": "visuals",
+      "layout": [
+        {
+          "widget": {
+            "name": "1661e35d",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "94428759",
+                  "fields": [
+                    {
+                      "name": "drugname",
+                      "expression": "`drugname`"
+                    },
+                    {
+                      "name": "avg(rating)",
+                      "expression": "AVG(`rating`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Average Rating by Drug Name",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "drugname",
+                  "displayName": "Drug Name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "avg(rating)",
+                  "format": {
+                    "type": "number-plain",
+                    "decimalPlaces": {
+                      "type": "exact",
+                      "places": 2
+                    },
+                    "abbreviation": "none"
+                  },
+                  "displayName": "Average Rating",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "drugname",
+                  "legend": {
+                    "position": "right"
+                  },
+                  "displayName": "Drug Name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "label": {
+                  "show": true
+                }
+              }
+            },
+            "specExtensions": {
+              "widgetBorderColor": {
+                "light": "#232121"
+              }
+            }
+          },
+          "position": {
+            "x": 5,
+            "y": 1,
+            "width": 7,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "c006c7f9",
+            "multilineTextboxSpec": {
+              "lines": [
+                "<span style=\"text-align:center;display:block\"><span style=\"font-size:24px;color:#077A9D\">**Drugs data 2001-2026**</span></span>"
+              ]
+            },
+            "specExtensions": {
+              "widgetBackgroundColor": {
+                "light": "#6DCDEE"
+              },
+              "widgetBorderColor": {
+                "light": "#1E1C1C"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 12,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "0d68e758",
+            "queries": [
+              {
+                "name": "dashboards/01f111f65ea9179ab31e6a47b456b939/datasets/01f111f7c88b16089d8ecb5827788618_rating",
+                "query": {
+                  "datasetName": "94428759",
+                  "fields": [
+                    {
+                      "name": "min(rating)",
+                      "expression": "MIN(`rating`)"
+                    },
+                    {
+                      "name": "max(rating)",
+                      "expression": "MAX(`rating`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true
+              },
+              "widgetType": "range-slider",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "rating",
+                    "queryName": "dashboards/01f111f65ea9179ab31e6a47b456b939/datasets/01f111f7c88b16089d8ecb5827788618_rating"
+                  }
+                ]
+              }
+            },
+            "specExtensions": {
+              "widgetBorderColor": {
+                "light": "#282626"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 1,
+            "width": 5,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "9ac0d574",
+            "queries": [
+              {
+                "name": "dashboards/01f111f65ea9179ab31e6a47b456b939/datasets/01f111f7c88b16089d8ecb5827788618_date",
+                "query": {
+                  "datasetName": "94428759",
+                  "fields": [
+                    {
+                      "name": "date",
+                      "expression": "`date`"
+                    },
+                    {
+                      "name": "date_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true
+              },
+              "selection": {
+                "defaultSelection": {
+                  "values": {
+                    "dataType": "DATE",
+                    "values": [
+                      {
+                        "value": "now-1y/y"
+                      }
+                    ]
+                  }
+                }
+              },
+              "widgetType": "filter-date-picker",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "date",
+                    "queryName": "dashboards/01f111f65ea9179ab31e6a47b456b939/datasets/01f111f7c88b16089d8ecb5827788618_date"
+                  }
+                ]
+              }
+            },
+            "specExtensions": {
+              "widgetBorderColor": {
+                "light": "#141313"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 2,
+            "width": 5,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "82ca2cf8",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "94428759",
+                  "fields": [
+                    {
+                      "name": "drugname",
+                      "expression": "`drugname`"
+                    },
+                    {
+                      "name": "sum(usefulcount)",
+                      "expression": "SUM(`usefulcount`)"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "IN_RANGE(`rating`, NULL, NULL)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Useful Count by Drug Name",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "drugname",
+                  "displayName": "Drug Name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(usefulcount)",
+                  "format": {
+                    "type": "number-plain",
+                    "decimalPlaces": {
+                      "type": "exact",
+                      "places": 0
+                    },
+                    "abbreviation": "none"
+                  },
+                  "displayName": "Total Useful Count",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "drugname",
+                  "legend": {
+                    "position": "right"
+                  },
+                  "displayName": "Drug Name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "label": {
+                  "show": true
+                }
+              }
+            },
+            "specExtensions": {
+              "widgetBorderColor": {
+                "light": "#252222"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 3,
+            "width": 5,
+            "height": 5
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "21d2b63a",
+      "displayName": "drugs view",
+      "layout": [
+        {
+          "widget": {
+            "name": "6fa4fc5e",
+            "multilineTextboxSpec": {
+              "lines": [
+                "<span style=\"text-align:center;display:block;\"><span style=\"font-size: 18px;\">**Drugs Usage Metrics**</span></span>"
+              ]
+            },
+            "specExtensions": {
+              "widgetBackgroundColor": {
+                "light": "#D26F6F"
+              },
+              "widgetBorderColor": {
+                "light": "#1E1C1C"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 12,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "total-drugs-vs-distinct-rating",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "998e470d",
+                  "fields": [
+                    {
+                      "name": "countdistinct(rating)",
+                      "expression": "COUNT(DISTINCT `rating`)"
+                    },
+                    {
+                      "name": "count(*)",
+                      "expression": "COUNT(`*`)"
+                    }
+                  ],
+                  "parameterValues": [
+                    {
+                      "keyword": "parameter",
+                      "selection": {
+                        "values": {
+                          "dataType": "STRING",
+                          "values": [
+                            {
+                              "value": "Cipla"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "showDescription": true,
+                "title": "Total Drugs vs Distinct Rating",
+                "description": "KPI"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "count(*)"
+                },
+                "target": {
+                  "fieldName": "countdistinct(rating)"
+                }
+              }
+            },
+            "specExtensions": {
+              "widgetBackgroundColor": {
+                "light": "#EFA5A5"
+              },
+              "widgetBorderColor": {
+                "light": "#151414"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 1,
+            "width": 5,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "rating-comparison-drugs-count",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "998e470d",
+                  "fields": [
+                    {
+                      "name": "sum(rating)",
+                      "expression": "SUM(`rating`)"
+                    },
+                    {
+                      "name": "sum(usefulcount)",
+                      "expression": "SUM(`usefulcount`)"
+                    },
+                    {
+                      "name": "rating",
+                      "expression": "`rating`"
+                    },
+                    {
+                      "name": "count(uniqueid)",
+                      "expression": "COUNT(`uniqueid`)"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "IN_RANGE(`date`, DATE'2012-01-01T00:00:00.000', DATE'2018-02-28T00:00:00.000')"
+                    },
+                    {
+                      "expression": "IN_RANGE(`rating`, 3, 10)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "annotations": [
+                {
+                  "type": "horizontal-line",
+                  "encodings": {
+                    "y": {
+                      "dataValue": "650",
+                      "dataType": "INTEGER"
+                    },
+                    "label": {
+                      "value": "Median Rating Count"
+                    },
+                    "color": {
+                      "value": {
+                        "themeColorType": "visualizationColors",
+                        "position": 4
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "vertical-line",
+                  "encodings": {
+                    "x": {
+                      "dataValue": "6",
+                      "dataType": "INTEGER"
+                    },
+                    "label": {
+                      "value": "Median Rating Value"
+                    }
+                  }
+                }
+              ],
+              "frame": {
+                "showTitle": true,
+                "title": "Rating Comparison of Drugs count",
+                "headerAlignment": "center"
+              },
+              "mark": {
+                "colors": [
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 8
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ]
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "rating",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "count(uniqueid)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "sum(rating)",
+                  "scale": {
+                    "type": "quantitative",
+                    "colorRamp": {
+                      "mode": "scheme",
+                      "scheme": "rainbow"
+                    }
+                  }
+                },
+                "label": {
+                  "show": true
+                },
+                "extra": [
+                  {
+                    "fieldName": "sum(usefulcount)"
+                  }
+                ]
+              }
+            },
+            "specExtensions": {
+              "widgetBackgroundColor": {
+                "light": "#E59E9E"
+              },
+              "widgetBorderColor": {
+                "light": "#1E1C1C"
+              }
+            }
+          },
+          "position": {
+            "x": 5,
+            "y": 1,
+            "width": 7,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "95f4e089",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "998e470d",
+                  "fields": [
+                    {
+                      "name": "usefulcount",
+                      "expression": "`usefulcount`"
+                    },
+                    {
+                      "name": "count(condition)",
+                      "expression": "COUNT(`condition`)"
+                    },
+                    {
+                      "name": "avg(rating)",
+                      "expression": "AVG(`rating`)"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "IN_RANGE(`usefulcount`, 70, 90)"
+                    },
+                    {
+                      "expression": "IN_RANGE(`uniqueid`, NULL, NULL)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "pie",
+              "encodings": {
+                "angle": {
+                  "fieldName": "usefulcount",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "usefulcount",
+                  "scale": {
+                    "type": "quantitative",
+                    "colorRamp": {
+                      "mode": "scheme",
+                      "scheme": "rainbow"
+                    }
+                  }
+                },
+                "label": {
+                  "show": false
+                },
+                "extra": [
+                  {
+                    "fieldName": "count(condition)"
+                  },
+                  {
+                    "fieldName": "avg(rating)"
+                  }
+                ]
+              }
+            },
+            "specExtensions": {
+              "widgetBackgroundColor": {
+                "light": "#F4B2B2"
+              },
+              "widgetBorderColor": {
+                "light": "#1A1919"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 3,
+            "width": 5,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "89986268",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "998e470d",
+                  "fields": [
+                    {
+                      "name": "monthly(date)",
+                      "expression": "DATE_TRUNC(\"MONTH\", `date`)"
+                    },
+                    {
+                      "name": "countdistinct(date)",
+                      "expression": "COUNT(DISTINCT `date`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "mark": {
+                "colors": [
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 1
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 8
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ]
+              },
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "monthly(date)",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "countdistinct(date)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            },
+            "specExtensions": {
+              "widgetBackgroundColor": {
+                "light": "#EEBFBF"
+              },
+              "widgetBorderColor": {
+                "light": "#1E1C1C"
+              }
+            }
+          },
+          "position": {
+            "x": 5,
+            "y": 6,
+            "width": 7,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "0c1e1e38",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "998e470d",
+                  "fields": [
+                    {
+                      "name": "rating",
+                      "expression": "`rating`"
+                    },
+                    {
+                      "name": "sum(usefulcount)",
+                      "expression": "SUM(`usefulcount`)"
+                    },
+                    {
+                      "name": "count(uniqueid)",
+                      "expression": "COUNT(`uniqueid`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 1,
+              "mark": {
+                "colors": [
+                  {
+                    "themeColorType": "selectionColor"
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 8
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ]
+              },
+              "widgetType": "combo",
+              "encodings": {
+                "x": {
+                  "fieldName": "rating",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "primary": {
+                    "fields": [
+                      {
+                        "fieldName": "sum(usefulcount)"
+                      }
+                    ]
+                  },
+                  "secondary": {
+                    "fields": [
+                      {
+                        "fieldName": "count(uniqueid)"
+                      }
+                    ]
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "legend": {
+                    "position": "top",
+                    "title": "Comparison of  useful count & drug count"
+                  }
+                }
+              }
+            },
+            "specExtensions": {
+              "widgetBackgroundColor": {
+                "light": "#F4CBCB"
+              },
+              "widgetBorderColor": {
+                "light": "#151313"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 14,
+            "width": 12,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "4577baeb",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "998e470d",
+                  "fields": [
+                    {
+                      "name": "sum(usefulcount)",
+                      "expression": "SUM(`usefulcount`)"
+                    },
+                    {
+                      "name": "monthly(date)",
+                      "expression": "DATE_TRUNC(\"MONTH\", `date`)"
+                    },
+                    {
+                      "name": "count(*)",
+                      "expression": "COUNT(`*`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "mark": {
+                "colors": [
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 8
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ]
+              },
+              "widgetType": "area",
+              "encodings": {
+                "x": {
+                  "fieldName": "monthly(date)",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "count(*)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "sum(usefulcount)",
+                  "scale": {
+                    "type": "quantitative",
+                    "colorRamp": {
+                      "mode": "scheme",
+                      "scheme": "rainbow"
+                    }
+                  }
+                }
+              }
+            },
+            "specExtensions": {
+              "widgetBackgroundColor": {
+                "light": "#EEBFBF"
+              },
+              "widgetBorderColor": {
+                "light": "#1E1C1C"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 10,
+            "width": 12,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "d0a93b92",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "998e470d",
+                  "fields": [
+                    {
+                      "name": "uniqueid",
+                      "expression": "`uniqueid`"
+                    },
+                    {
+                      "name": "drugname",
+                      "expression": "`drugname`"
+                    },
+                    {
+                      "name": "condition",
+                      "expression": "`condition`"
+                    },
+                    {
+                      "name": "rating",
+                      "expression": "`rating`"
+                    },
+                    {
+                      "name": "usefulcount",
+                      "expression": "`usefulcount`"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "IN_RANGE(`rating`, 7, 10)"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Drug Details Table",
+                "showTitle": true
+              },
+              "rowsPerPage": 25,
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "uniqueid",
+                    "contentAlignment": "left",
+                    "displayName": "Drug ID"
+                  },
+                  {
+                    "fieldName": "drugname",
+                    "displayName": "Drug Name"
+                  },
+                  {
+                    "fieldName": "condition",
+                    "displayName": "Condition"
+                  },
+                  {
+                    "fieldName": "rating",
+                    "contentAlignment": "left",
+                    "displayName": "Rating"
+                  },
+                  {
+                    "fieldName": "usefulcount",
+                    "contentAlignment": "left",
+                    "displayName": "Useful Count"
+                  }
+                ]
+              }
+            },
+            "specExtensions": {
+              "widgetBackgroundColor": {
+                "light": "#EECDCD"
+              },
+              "widgetBorderColor": {
+                "light": "#252222"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 20,
+            "width": 12,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "09dc2aee",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "998e470d",
+                  "fields": [
+                    {
+                      "name": "drugname",
+                      "expression": "`drugname`"
+                    },
+                    {
+                      "name": "rating",
+                      "expression": "`rating`"
+                    },
+                    {
+                      "name": "sum(usefulcount)",
+                      "expression": "SUM(`usefulcount`)"
+                    }
+                  ],
+                  "cubeGroupingSets": {
+                    "sets": [
+                      {
+                        "fieldNames": [
+                          "drugname"
+                        ]
+                      },
+                      {
+                        "fieldNames": [
+                          "rating"
+                        ]
+                      }
+                    ]
+                  },
+                  "disaggregated": false,
+                  "orders": [
+                    {
+                      "direction": "ASC",
+                      "expression": "`drugname`"
+                    },
+                    {
+                      "direction": "ASC",
+                      "expression": "`rating`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "pivot",
+              "encodings": {
+                "rows": [
+                  {
+                    "fieldName": "drugname"
+                  }
+                ],
+                "columns": [
+                  {
+                    "fieldName": "rating"
+                  }
+                ],
+                "cell": {
+                  "type": "multi-cell",
+                  "fields": [
+                    {
+                      "fieldName": "sum(usefulcount)",
+                      "cellType": "text"
+                    }
+                  ]
+                }
+              }
+            },
+            "specExtensions": {
+              "widgetBackgroundColor": {
+                "light": "#EECCCC"
+              },
+              "widgetBorderColor": {
+                "light": "#171515"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 26,
+            "width": 12,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "164a9209",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "998e470d",
+                  "fields": [
+                    {
+                      "name": "condition",
+                      "expression": "`condition`"
+                    },
+                    {
+                      "name": "min(usefulcount)",
+                      "expression": "MIN(`usefulcount`)"
+                    },
+                    {
+                      "name": "q1(usefulcount)",
+                      "expression": "PERCENTILE(`usefulcount`, 0.25)"
+                    },
+                    {
+                      "name": "median(usefulcount)",
+                      "expression": "MEDIAN(`usefulcount`)"
+                    },
+                    {
+                      "name": "q3(usefulcount)",
+                      "expression": "PERCENTILE(`usefulcount`, 0.75)"
+                    },
+                    {
+                      "name": "max(usefulcount)",
+                      "expression": "MAX(`usefulcount`)"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "`condition` IN ('Agitated State', 'Allergies', 'Basal Cell Carcinoma', 'ADHD')"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "box",
+              "encodings": {
+                "x": {
+                  "fieldName": "condition",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "whiskerStart": {
+                    "fieldName": "min(usefulcount)"
+                  },
+                  "boxStart": {
+                    "fieldName": "q1(usefulcount)"
+                  },
+                  "boxMid": {
+                    "fieldName": "median(usefulcount)"
+                  },
+                  "boxEnd": {
+                    "fieldName": "q3(usefulcount)"
+                  },
+                  "whiskerEnd": {
+                    "fieldName": "max(usefulcount)"
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            },
+            "specExtensions": {
+              "widgetBackgroundColor": {
+                "light": "#F4D3D3"
+              },
+              "widgetBorderColor": {
+                "light": "#262424"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 32,
+            "width": 12,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "b90e944d",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "998e470d",
+                  "fields": [
+                    {
+                      "name": "rating",
+                      "expression": "`rating`"
+                    },
+                    {
+                      "name": "sum(usefulcount)",
+                      "expression": "SUM(`usefulcount`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "waterfall",
+              "encodings": {
+                "x": {
+                  "fieldName": "rating",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(usefulcount)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            },
+            "specExtensions": {
+              "widgetBackgroundColor": {
+                "light": "#F1D0D0"
+              },
+              "widgetBorderColor": {
+                "light": "#2B2828"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 38,
+            "width": 8,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "column-chart-using-bae-chart",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "998e470d",
+                  "fields": [
+                    {
+                      "name": "sum(usefulcount)",
+                      "expression": "SUM(`usefulcount`)"
+                    },
+                    {
+                      "name": "rating",
+                      "expression": "`rating`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Column chart using bae chart"
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "sum(usefulcount)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "rating",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            },
+            "specExtensions": {
+              "widgetBackgroundColor": {
+                "light": "#F8D5D5"
+              },
+              "widgetBorderColor": {
+                "light": "#1A1818"
+              }
+            }
+          },
+          "position": {
+            "x": 8,
+            "y": 38,
+            "width": 4,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "68671a69",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "998e470d",
+                  "fields": [
+                    {
+                      "name": "sum(usefulcount)",
+                      "expression": "SUM(`usefulcount`)"
+                    },
+                    {
+                      "name": "rating",
+                      "expression": "`rating`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "funnel",
+              "encodings": {
+                "x": {
+                  "fieldName": "sum(usefulcount)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "rating",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "x-reversed"
+                    }
+                  }
+                }
+              }
+            },
+            "specExtensions": {
+              "widgetBackgroundColor": {
+                "light": "#F4D1D1"
+              },
+              "widgetBorderColor": {
+                "light": "#1E1C1C"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 44,
+            "width": 5,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "5cd5d31b",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "998e470d",
+                  "fields": [
+                    {
+                      "name": "sum(usefulcount)",
+                      "expression": "SUM(`usefulcount`)"
+                    },
+                    {
+                      "name": "rating",
+                      "expression": "`rating`"
+                    },
+                    {
+                      "name": "usefulcount",
+                      "expression": "`usefulcount`"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "IN_RANGE(`usefulcount`, 50, 60)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "heatmap",
+              "encodings": {
+                "x": {
+                  "fieldName": "rating",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "usefulcount",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "sum(usefulcount)",
+                  "scale": {
+                    "type": "quantitative",
+                    "colorRamp": {
+                      "mode": "scheme",
+                      "scheme": "reds"
+                    }
+                  }
+                }
+              }
+            },
+            "specExtensions": {
+              "widgetBackgroundColor": {
+                "light": "#EED5D5"
+              },
+              "widgetBorderColor": {
+                "light": "#141212"
+              }
+            }
+          },
+          "position": {
+            "x": 5,
+            "y": 44,
+            "width": 7,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "76ed8786",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "998e470d",
+                  "fields": [
+                    {
+                      "name": "usefulcount",
+                      "expression": "`usefulcount`"
+                    },
+                    {
+                      "name": "rating",
+                      "expression": "`rating`"
+                    },
+                    {
+                      "name": "condition",
+                      "expression": "`condition`"
+                    },
+                    {
+                      "name": "sum(usefulcount)",
+                      "expression": "SUM(`usefulcount`)"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "IN_RANGE(`usefulcount`, 10, 15)"
+                    },
+                    {
+                      "expression": "`condition` IN ('ADHD', 'Allergies')"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 1,
+              "widgetType": "sankey",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(usefulcount)"
+                },
+                "stages": [
+                  {
+                    "fieldName": "usefulcount"
+                  },
+                  {
+                    "fieldName": "rating"
+                  },
+                  {
+                    "fieldName": "condition"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 50,
+            "width": 12,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "a8e9a818",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "998e470d",
+                  "fields": [
+                    {
+                      "name": "rating",
+                      "expression": "`rating`"
+                    },
+                    {
+                      "name": "usefulcount",
+                      "expression": "`usefulcount`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "scatter",
+              "encodings": {
+                "x": {
+                  "fieldName": "rating",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "usefulcount",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "rating",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "extra": [
+                  {
+                    "fieldName": "rating"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 56,
+            "width": 12,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "041b802c",
+      "displayName": "combined view",
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "560d9b10",
+      "displayName": "patient_view",
+      "layout": [
+        {
+          "widget": {
+            "name": "total-patients",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "d9e4cf17",
+                  "fields": [
+                    {
+                      "name": "countdistinct(patientid)",
+                      "expression": "COUNT(DISTINCT `patientid`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Total Patients",
+                "headerAlignment": "center"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "countdistinct(patientid)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "20e7cea4",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "d9e4cf17",
+                  "fields": [
+                    {
+                      "name": "sum(DrugCharges)",
+                      "expression": "SUM(`DrugCharges`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Total Charges paid ",
+                "headerAlignment": "center"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(DrugCharges)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 0,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "866a6160",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "d9e4cf17",
+                  "fields": [
+                    {
+                      "name": "PaymentMethod",
+                      "expression": "`PaymentMethod`"
+                    },
+                    {
+                      "name": "TotalCharges",
+                      "expression": "`TotalCharges`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "PaymentMethod",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "TotalCharges",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 2,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "b7580197",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "d9e4cf17",
+                  "fields": [
+                    {
+                      "name": "count(*)",
+                      "expression": "COUNT(`*`)"
+                    },
+                    {
+                      "name": "PaymentMethod",
+                      "expression": "`PaymentMethod`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "pie",
+              "encodings": {
+                "angle": {
+                  "fieldName": "count(*)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "PaymentMethod",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 0,
+            "width": 6,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "canvasBackgroundColor": {
+        "light": "#8E8EE2",
+        "dark": "#1F272D"
+      },
+      "widgetBackgroundColor": {
+        "light": "#FFFFFF",
+        "dark": "#11171C"
+      },
+      "fontColor": {
+        "light": "#11171C",
+        "dark": "#E8ECF0"
+      },
+      "selectionColor": {
+        "light": "#2272B4",
+        "dark": "#8ACAFF"
+      },
+      "visualizationColors": [
+        "#077A9D",
+        "#FFAB00",
+        "#00A972",
+        "#FF3621",
+        "#8BCAE7",
+        "#AB4057",
+        "#99DDB4",
+        "#FCA4A1",
+        "#919191",
+        "#BF7080"
+      ],
+      "widgetHeaderAlignment": "LEFT"
+    },
+    "applyModeEnabled": false
+  }
+}
