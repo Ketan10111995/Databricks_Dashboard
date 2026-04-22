@@ -1,0 +1,556 @@
+{
+  "datasets": [
+    {
+      "name": "faf1396f",
+      "displayName": "sales_orders",
+      "config": {
+        "version": "1.1",
+        "source": "databricks_simulated_retail_customer_data.v01.sales_orders",
+        "dimensions": [
+          {
+            "name": "clicked_items",
+            "expr": "source.clicked_items",
+            "displayName": "Clicked Items"
+          },
+          {
+            "name": "customer_id",
+            "expr": "source.customer_id",
+            "displayName": "Customer Id"
+          },
+          {
+            "name": "customer_name",
+            "expr": "source.customer_name",
+            "displayName": "Customer Name"
+          },
+          {
+            "name": "number_of_line_items",
+            "expr": "source.number_of_line_items",
+            "displayName": "Number Of Line Items"
+          },
+          {
+            "name": "order_datetime",
+            "expr": "source.order_datetime",
+            "displayName": "Order Datetime"
+          },
+          {
+            "name": "order_number",
+            "expr": "source.order_number",
+            "displayName": "Order Number"
+          },
+          {
+            "name": "ordered_products",
+            "expr": "source.ordered_products",
+            "displayName": "Ordered Products"
+          },
+          {
+            "name": "promo_info",
+            "expr": "source.promo_info",
+            "displayName": "Promo Info"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset. Use this measure to count all",
+            "displayName": "Count"
+          }
+        ]
+      }
+    },
+    {
+      "name": "5b98e174",
+      "displayName": "Count Total Sales",
+      "queryLines": [
+        "SELECT sum(total_price) AS Total_Sales, 3000000 AS Sales_Goal FROM databricks_simulated_retail_customer_data.v01.sales;"
+      ]
+    },
+    {
+      "name": "6dc36eef",
+      "displayName": "Three Month Sales",
+      "queryLines": [
+        "SELECT customer_name, \r\n",
+        "       total_price AS Total_Sales, \r\n",
+        "       date_format(order_date, \"MM\") AS Month, \r\n",
+        "       product_category \r\n",
+        "FROM databricks_simulated_retail_customer_data.v01.sales \r\n",
+        "WHERE order_date >= to_date('2019-08-01')\r\n",
+        "AND order_date <=  to_date('2019-10-31');"
+      ]
+    },
+    {
+      "name": "84aef7fc",
+      "displayName": "Untitled dataset",
+      "queryLines": [
+        ""
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "bcbefe75",
+      "displayName": "Untitled page",
+      "layout": [
+        {
+          "widget": {
+            "name": "sales-goal",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "5b98e174",
+                  "fields": [
+                    {
+                      "name": "sum(Sales_Goal)",
+                      "expression": "SUM(`Sales_Goal`)"
+                    },
+                    {
+                      "name": "sum(Total_Sales)",
+                      "expression": "SUM(`Total_Sales`)"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "IN_RANGE(`Sales_Goal`, NULL, NULL)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Sales goal",
+                "headerAlignment": "center"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(Total_Sales)",
+                  "format": {
+                    "type": "number-currency",
+                    "currencyCode": "USD",
+                    "abbreviation": "none",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 2
+                    }
+                  },
+                  "style": {
+                    "rules": [
+                      {
+                        "condition": {
+                          "operator": "<="
+                        },
+                        "color": {
+                          "themeColorType": "visualizationColors",
+                          "position": 4
+                        }
+                      }
+                    ]
+                  }
+                },
+                "target": {
+                  "fieldName": "sum(Sales_Goal)"
+                }
+              }
+            },
+            "specExtensions": {
+              "widgetBackgroundColor": {
+                "light": "#FFFFFF"
+              },
+              "widgetBorderColor": {
+                "light": "#000000"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 2,
+            "width": 6,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "combo-chart",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "6dc36eef",
+                  "fields": [
+                    {
+                      "name": "Month",
+                      "expression": "`Month`"
+                    },
+                    {
+                      "name": "sum(Total_Sales)",
+                      "expression": "SUM(`Total_Sales`)"
+                    },
+                    {
+                      "name": "count(*)",
+                      "expression": "COUNT(`*`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 1,
+              "frame": {
+                "showTitle": true,
+                "headerAlignment": "center",
+                "title": "Combo chart"
+              },
+              "widgetType": "combo",
+              "encodings": {
+                "x": {
+                  "fieldName": "Month",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "primary": {
+                    "fields": [
+                      {
+                        "fieldName": "sum(Total_Sales)",
+                        "displayName": "Total Sales Value"
+                      }
+                    ],
+                    "scale": {
+                      "type": "quantitative"
+                    },
+                    "format": {
+                      "type": "number-currency",
+                      "currencyCode": "USD",
+                      "abbreviation": "compact",
+                      "decimalPlaces": {
+                        "type": "max",
+                        "places": 2
+                      }
+                    }
+                  },
+                  "secondary": {
+                    "fields": [
+                      {
+                        "fieldName": "count(*)",
+                        "displayName": "Count of Sales Orders"
+                      }
+                    ],
+                    "scale": {
+                      "type": "quantitative"
+                    }
+                  }
+                }
+              }
+            },
+            "specExtensions": {
+              "widgetBorderColor": {
+                "light": "#000000"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 4,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "f02f293d",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "6dc36eef",
+                  "fields": [
+                    {
+                      "name": "product_category",
+                      "expression": "`product_category`"
+                    },
+                    {
+                      "name": "avg(Total_Sales)",
+                      "expression": "AVG(`Total_Sales`)"
+                    },
+                    {
+                      "name": "sum(Total_Sales)",
+                      "expression": "SUM(`Total_Sales`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Average Sales by Category",
+                "showTitle": true,
+                "headerAlignment": "center"
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "product_category",
+                  "displayName": "Product Category",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "primary": {
+                    "fields": [
+                      {
+                        "fieldName": "avg(Total_Sales)"
+                      }
+                    ],
+                    "scale": {
+                      "type": "quantitative"
+                    }
+                  },
+                  "secondary": {
+                    "fields": [
+                      {
+                        "fieldName": "sum(Total_Sales)"
+                      }
+                    ],
+                    "scale": {
+                      "type": "quantitative"
+                    }
+                  }
+                }
+              }
+            },
+            "specExtensions": {
+              "widgetBorderColor": {
+                "light": "#000000"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 4,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "8d19cf3d",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "faf1396f",
+                  "fields": [
+                    {
+                      "name": "order_datetime",
+                      "expression": "`order_datetime`"
+                    },
+                    {
+                      "name": "countdistinct(clicked_items)",
+                      "expression": "COUNT(DISTINCT `clicked_items`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "scatter",
+              "encodings": {
+                "x": {
+                  "fieldName": "order_datetime",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "countdistinct(clicked_items)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            },
+            "specExtensions": {
+              "widgetBorderColor": {
+                "light": "#000000"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 10,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "baadb2e6",
+            "multilineTextboxSpec": {
+              "lines": [
+                "<span style=\"text-align:center;display:block\"><span style=\"font-size: 24px;\">Retail Organization</span></span>"
+              ]
+            },
+            "specExtensions": {
+              "widgetBackgroundColor": {
+                "light": "#FFFCFC"
+              },
+              "widgetBorderColor": {
+                "light": "#000000"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 12,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "c617bc2b",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "6dc36eef",
+                  "fields": [
+                    {
+                      "name": "product_category",
+                      "expression": "`product_category`"
+                    },
+                    {
+                      "name": "max(Total_Sales)",
+                      "expression": "MAX(`Total_Sales`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Max sales of particular product ",
+                "headerAlignment": "center"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "max(Total_Sales)",
+                  "format": {
+                    "type": "number-currency",
+                    "currencyCode": "USD",
+                    "abbreviation": "none",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 2
+                    }
+                  },
+                  "style": {
+                    "rules": [
+                      {
+                        "condition": {
+                          "operator": "<="
+                        }
+                      }
+                    ]
+                  }
+                },
+                "target": {
+                  "fieldName": "product_category"
+                }
+              }
+            },
+            "specExtensions": {
+              "widgetBackgroundColor": {
+                "light": "#FFFFFF"
+              },
+              "widgetBorderColor": {
+                "light": "#000000"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 2,
+            "width": 6,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "dd4ea2b9",
+            "queries": [
+              {
+                "name": "dashboards/01f13df263051307879584997b4f858c/datasets/01f13df277e6181b9828b76b450f7b94_customer_id",
+                "query": {
+                  "datasetName": "faf1396f",
+                  "fields": [
+                    {
+                      "name": "customer_id",
+                      "expression": "`customer_id`"
+                    },
+                    {
+                      "name": "customer_id_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "headerAlignment": "left"
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "customer_id",
+                    "queryName": "dashboards/01f13df263051307879584997b4f858c/datasets/01f13df277e6181b9828b76b450f7b94_customer_id"
+                  }
+                ]
+              }
+            },
+            "specExtensions": {
+              "widgetBorderColor": {
+                "light": "#000000"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 1,
+            "width": 12,
+            "height": 1
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}
